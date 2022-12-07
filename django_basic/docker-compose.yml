@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: gunicorn django_basic.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/'
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  db:
+    image: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mariadb/data
+    environment:
+      - MARIADB_USER=django_basic_db_user
+      - MARIADB_PASSWORD=django_basic_db_passowrd
+      - MARIADB_DB=django_basic_dev
+volumes:
+  mariadb_data:

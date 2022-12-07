@@ -24,7 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-x^rvc7l9d9y^e)@rj54kfe8wcryr7#n-(%mqnlz07(04ot7!@2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', 1))
+
+if os.environ.get('DJANGO_ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
+else:
+    ALLOWED_HOSTS = []
 
 ALLOWED_HOSTS = ["*"]
 
@@ -77,14 +82,14 @@ WSGI_APPLICATION = 'firstsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'marker',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3'))
+        # 'ENGINE': os.environ.get("SQL_ENGINE"),
+        # 'NAME': os.environ.get("SQL_DATABASE"),
+        # 'USER': os.environ.get('SQL_USER'),
+        # 'PASSWORD': os.environ.get('SQL_PASSWORD'),
+        # 'HOST': os.environ.get('SQL_HOST'),
+        # 'PORT': os.environ.get('SQL_PORT')
     }
 }
 
