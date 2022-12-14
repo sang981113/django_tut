@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-chso!fe@0(=m%l7mf^=s4^!az&da%5t35)f4zywrc(d)5*d44!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -184,6 +184,10 @@ LOGGING = {
             'handlers': ['django.server'],
             'level': 'INFO',
             'propagate': False,
+        },
+        'blog': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
         },
     }
 }
